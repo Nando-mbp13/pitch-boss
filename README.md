@@ -1,28 +1,24 @@
-# ⚽ CLUB BOSS
+# ⚽ PITCH BOSS
 
-> Football management game. Urban / Neon-Punk aesthetic.
-> Built with Vanilla JS, HTML5 Canvas and Web Audio API.
+> Own the Pitch. Run the Club.
+
+Browser-based football management game with Neon-Punk aesthetic.
+Built with Vanilla JS, HTML5 Canvas and Web Audio API.
+Zero dependencies. No build step.
 
 ## Play
-🎮 [Play on Itch.io](TU_LINK_AQUI)
+🎮 [Play on Itch.io](TU_LINK_ITCH_AQUI)
 
 ## About
-Club Boss is a browser-based football management game where you
-take control of a club from scratch. Sign players, set tactics,
-simulate matches and climb the league table.
+Take control of a football club from scratch.
+Sign players, set tactics, simulate matches
+and climb the league table in 9 brutal jornadas.
 
 ## Built with
-- Vanilla JavaScript (zero dependencies)
+- Vanilla JavaScript — zero frameworks
 - HTML5 Canvas API — match animation
-- Web Audio API — procedural chiptune sound
-- CSS3 — Neon-Punk UI design
-
-## Features
-- Player generator with stats by position
-- Transfer market
-- Match simulation engine
-- League table with 9 rivals
-- Procedural audio — no external files
+- Web Audio API — procedural punk sound
+- CSS3 — Neon-Punk street UI
 
 ## Run locally
-Just open `index.html` in any browser. No build step needed.
+Open index.html in any browser. That's it.
