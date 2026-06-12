@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;900&family=Share+Tech+Mono&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --negro:       #0A0A0A;
+  --carbon:      #111111;
+  --carbon2:     #1A1A1A;
+  --placa:       #222222;
+  --placa2:      #2A2A2A;
+  --rosa:        #FF2D78;
+  --rosa-dim:    #CC1A55;
+  --rosa-glow:   rgba(255,45,120,0.35);
+  --amarillo:    #E8FF00;
+  --amarillo-dim:#B8CC00;
+  --blanco:      #F0F0F0;
+  --gris:        #888888;
+  --gris-osc:    #333333;
+  --gris-med:    #555555;
+}
+
+body{
+  background: var(--carbon);
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.012) 2px,rgba(255,255,255,0.012) 3px),
+    repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(0,0,0,0.08) 4px,rgba(0,0,0,0.08) 5px);
+  color: var(--blanco);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem;
+}
+
+/* ── PANTALLAS ── */
+.screen{display:none;width:100%;max-width:880px;margin:0 auto}
+.screen.active{display:block}
+.screen#screen-partido.active{display:flex;flex-direction:column;align-items:center}
+.hidden{display:none !important}
+
+/* ── MARCO PRINCIPAL ── */
+.marco-punk{
+  background: var(--carbon);
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.012) 2px,rgba(255,255,255,0.012) 3px),
+    repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(0,0,0,0.08) 4px,rgba(0,0,0,0.08) 5px);
+  border: 1px solid var(--gris-osc);
+  border-top: 3px solid var(--rosa);
+  position: relative;
+}
+/* Esquina cortada decorativa */
+.marco-punk::before{
+  content:'';position:absolute;top:0;right:0;
+  width:0;height:0;
+  border-style:solid;
+  border-width:0 28px 28px 0;
+  border-color:transparent var(--rosa) transparent transparent;
+  z-index:10;
+}
+
+/* ── BOTONES BASE ── */
+button{
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+}
+button:not(.btn-accion):not(.btn-nav):not(.card-btn){
+  background: transparent;
+  color: var(--gris);
+  border: 1px solid var(--gris-osc);
+  padding: 8px 16px;
+  font-size: 13px;
+  clip-path: polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);
+}
+button:not(.btn-accion):not(.btn-nav):not(.card-btn):hover{
+  border-color: var(--rosa);
+  color: var(--rosa);
+}
+button:disabled{opacity:0.3;cursor:not-allowed}
+
+/* ── INPUTS ── */
+input[type="text"]{
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  background: var(--carbon2);
+  border: 1px solid var(--gris-osc);
+  border-left: 3px solid var(--rosa);
+  color: var(--blanco);
+  padding: 10px 14px;
+  width: 100%;
+  max-width: 340px;
+  margin: 1rem 0;
+  outline: none;
+  letter-spacing: 1px;
+}
+input[type="text"]:focus{border-color:var(--rosa);border-left-color:var(--amarillo)}
+
+/* ── TIPOGRAFÍA ── */
+h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:52px;letter-spacing:8px;
+  color:var(--blanco);
+  text-shadow:4px 4px 0 var(--rosa),-2px -2px 0 rgba(232,255,0,0.3);
+}
+h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;color:var(--blanco)}
+h3{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--rosa)}
+h4{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gris)}

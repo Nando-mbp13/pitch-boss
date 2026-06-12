@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Boss</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/screens.css" />
+  
+  <meta name="description" content="Club Boss — Browser football management game. Neon-Punk style." />
+  <meta property="og:title" content="Club Boss" />
+  <meta property="og:description" content="Manage your football club. Sign players, set tactics, simulate matches." />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+
+  <!-- MODAL GLOBAL -->
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal-caja">
+      <h2 id="modal-titulo">Título</h2>
+      <p id="modal-mensaje">Mensaje aquí.</p>
+      <button id="modal-cerrar">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA 1: Menú principal -->
+  <div id="screen-menu" class="screen active">
+    <h1>⚽ CLUB BOSS</h1>
+    <p>Conviértete en el manager más grande del mundo</p>
+    <button id="btn-nueva-partida">Nueva Partida</button>
+    <button id="btn-continuar" disabled>Continuar</button>
+  </div>
+
+  <!-- PANTALLA 2: Creación del club -->
+  <div id="screen-crear-club" class="screen">
+    <h2>Crea tu Club</h2>
+    <label for="nombre-club">Nombre del club:</label>
+    <input type="text" id="nombre-club" placeholder="Ej: FC Trujillo" />
+    <br>
+    <button id="btn-confirmar-club">Confirmar →</button>
+  </div>
+
+  <!-- PANTALLA 3: Hub principal -->
+  <div id="screen-hub" class="screen marco-punk">
+
+  <header>
+    <span id="info-club-nombre">MI CLUB</span>
+    <div class="header-stats">
+      <div class="stat-tag">PRESUPUESTO <span id="info-presupuesto">$0</span></div>
+      <div class="stat-tag">JORNADA <span id="info-jornada">1 / 9</span></div>
+    </div>
+  </header>
+
+  <div class="hub-toolbar">
+    <nav class="hub-nav">
+      <button class="btn-nav activo" data-panel="plantilla">SQUAD</button>
+      <button class="btn-nav" data-panel="mercado">FICHAJES</button>
+      <button class="btn-nav" data-panel="tactica">TACTICA</button>
+      <button class="btn-nav" data-panel="liga">LIGA</button>
+    </nav>
+    <button id="btn-jugar-partido" class="btn-accion">&#9654; JUGAR JORNADA</button>
+  </div>
+
+  <div id="panel-plantilla" class="panel">
+    <div id="lista-jugadores"></div>
+  </div>
+  <div id="panel-mercado" class="panel hidden">
+    <div id="lista-mercado"></div>
+  </div>
+  <div id="panel-tactica" class="panel hidden"></div>
+  <div id="panel-liga" class="panel hidden">
+    <div id="tabla-liga"></div>
+  </div>
+
+</div>
+
+  <!-- PANTALLA 4: Partido -->
+  <div id="screen-partido" class="screen">
+
+  <div class="partido-header marco-punk">
+    <div id="titulo-partido" class="partido-titulo-wrap">
+      <span class="equipo-local">MI CLUB</span>
+      <span class="bloque-marcador">
+        <span class="nums-marcador">0 &mdash; 0</span>
+        <span class="minuto-tag">MIN. 0'</span>
+      </span>
+      <span class="equipo-rival">RIVAL</span>
+    </div>
+  </div>
+
+  <canvas id="cancha" width="860" height="380"></canvas>
+
+  <div class="partido-footer">
+    <div id="marcador" class="footer-marcador"></div>
+    <button id="btn-volver-hub" class="hidden btn-volver">&#8592; VOLVER AL HUB</button>
+  </div>
+
+  </div>
+
+    <script src="js/audio.js"></script>
+    <script src="js/players.js"></script>
+    <script src="js/club.js"></script>
+    <script src="js/simulation.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
