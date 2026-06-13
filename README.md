@@ -7,7 +7,8 @@ Built with Vanilla JS, HTML5 Canvas and Web Audio API.
 Zero dependencies. No build step.
 
 ## Play
-🎮 [Play on Itch.io](TU_LINK_ITCH_AQUI)
+🎮 [Play on Itch.io](https://nando-mbp13.itch.io/pitch-boss)
+🌐 [Play on GitHub Pages](https://nando-mbp13.github.io/pitch-boss/)
 
 ## About
 Take control of a football club from scratch.

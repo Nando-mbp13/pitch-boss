@@ -6,6 +6,13 @@
   <title>Pitch Boss</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+  
+  <script>
+    const t = localStorage.getItem('pitch-boss-tema') ||
+      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'sepia' : 'dark');
+    document.documentElement.setAttribute('data-tema', t);
+  </script>
+
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="css/screens.css" />
 
@@ -51,6 +58,7 @@
       <div class="stat-tag">PRESUPUESTO <span id="info-presupuesto">$0</span></div>
       <div class="stat-tag">JORNADA <span id="info-jornada">1 / 9</span></div>
     </div>
+    <button id="btn-tema" class="btn-tema" title="Cambiar tema">🌙</button>
   </header>
 
   <div class="hub-toolbar">
