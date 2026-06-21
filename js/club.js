@@ -13,6 +13,7 @@ const club = {
   nombre:      '',
   presupuesto: 5000000,   // $5,000,000 para empezar
   salarioSemanal: 0,      // Se calcula al fichar jugadores
+  temporada: 1,
   jornada:     1,
   puntos:      0,
   ganados:     0,
@@ -24,6 +25,43 @@ const club = {
   mercado:     [],        // Jugadores disponibles para fichar
   titulares:   []         // Los 11 elegidos para el partido
 };
+
+function iniciarNuevaTemporada() {
+
+  club.temporada++;
+
+  club.jornada = 1;
+
+  club.puntos = 0;
+  club.ganados = 0;
+  club.empatados = 0;
+  club.perdidos = 0;
+  club.golesFavor = 0;
+  club.golesContra = 0;
+
+  avanzarEdadJugadores();
+
+  inicializarLiga(club.nombre);
+}
+
+function avanzarEdadJugadores() {
+
+  club.plantilla.forEach(jugador => {
+
+    jugador.edad++;
+
+    if (jugador.edad > 34) {
+
+      jugador.media -= aleatorio(1,3);
+
+      jugador.media = Math.max(40, jugador.media);
+
+      jugador.valorMercado =
+        calcularValor(jugador.media, jugador.edad);
+    }
+  });
+
+}
 
 
 // --- INICIALIZAR CLUB ---

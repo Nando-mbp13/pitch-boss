@@ -34,7 +34,7 @@ document.getElementById('modal-cerrar').addEventListener('click', () => {
 function actualizarHeader() {
   document.getElementById('info-club-nombre').textContent = club.nombre.toUpperCase();
   document.getElementById('info-presupuesto').textContent = formatearDinero(club.presupuesto);
-  document.getElementById('info-jornada').textContent     = club.jornada + ' / 9';
+  document.getElementById('info-jornada').textContent     = club.jornada + ' / ' + (equiposLiga.length - 1);
 }
 
 // ── RENDER HELPERS ──
@@ -198,9 +198,26 @@ let equiposLiga = [];
 
 function inicializarLiga(nombreClub) {
   const rivales = [
-    'FC AMAZONAS','CLUB PACÍFICO','DEPORTIVO SUR',
-    'ATHLETIC NORTE','REAL ANDINO','SPORTING LIMA',
-    'CF COSTERO','UNIDOS FC','CLUB ESTRELLA'
+  'FC AMAZONAS',
+  'CLUB PACÍFICO',
+  'DEPORTIVO SUR',
+  'ATHLETIC NORTE',
+  'REAL ANDINO',
+  'SPORTING LIMA',
+  'CF COSTERO',
+  'UNIDOS FC',
+  'CLUB ESTRELLA',
+
+  'ATLÉTICO CENTRAL',
+  'DEPORTIVO OESTE',
+  'REAL CUSCO',
+  'SAN MARTÍN FC',
+  'UNIÓN TRUJILLO',
+  'PACÍFICO UNITED',
+  'INDEPENDIENTE FC',
+  'ACADEMIA SPORT',
+  'VALLE VERDE',
+  'METROPOLITANO FC'
   ];
   equiposLiga = [
     { nombre:nombreClub, esJugador:true,  pj:0,g:0,e:0,p:0,gf:0,gc:0,pts:0 },
