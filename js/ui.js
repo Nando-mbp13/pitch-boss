@@ -141,21 +141,34 @@ function dibujarFrame() {
   dibujarPelota();
 }
 
-// ── LOOP PRINCIPAL ──
+// ── LOOP PRINCIPAL ——
 function animLoop() {
   animFrameId = requestAnimationFrame(animLoop);
   tickAnim++;
-  if (!modoGol) {
-    if (tickAnim % 55 === 0) {
-      const todos = [...jugadoresLocal, ...jugadoresRival];
-      const n = 3 + Math.floor(Math.random()*4);
-      for (let i=0;i<n;i++) nuevoDestino(todos[Math.floor(Math.random()*todos.length)]);
-      pasarPelotaJugadores();
-    }
-    actualizarJugadores();
-    actualizarPelota(0.05);
+
+  // Si hay gol activo, el setInterval de la cinemática
+  // maneja TODO el dibujo — no dibujamos aquí
+  if (modoGol) return;
+
+  if (tickAnim % 55 === 0) {
+    const todos = [...jugadoresLocal, ...jugadoresRival];
+    const n = 3 + Math.floor(Math.random()*4);
+    for (let i=0;i<n;i++) nuevoDestino(todos[Math.floor(Math.random()*todos.length)]);
+    pasarPelotaJugadores();
   }
+  actualizarJugadores();
+  actualizarPelota(0.05);
   dibujarFrame();
+}
+
+// ── SKIP PARTIDO ──
+function skipPartido() {
+  // Cancela todo lo que esté corriendo
+  if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+  modoGol = false;
+
+  // Señal global para que el tick del partido sepa que debe parar
+  window._skipActivo = true;
 }
 
 // ══════════════════════════════════════
@@ -269,7 +282,10 @@ function cinematicaCentro(equipo, nombreEquipo, minuto, cb) {
     if(t===golEnFrame && !golDisparado){ golDisparado=true; dispararGol(equipo,nombreEquipo,minuto); }
 
     actualizarJugadores(); actualizarPelota(0.12); dibujarFrame();
-    if(t>golEnFrame){ overlayT++; overlayGol(equipo,nombreEquipo,minuto,Math.min(overlayT/40,1)); }
+    if(t>golEnFrame){
+      overlayT++;
+      overlayGol(equipo, nombreEquipo, minuto, Math.min(overlayT/40, 1));
+    }
     if(t>=dur){ clearInterval(inter); finalizarCinematica(cb); }
   },16);
 }
@@ -295,7 +311,10 @@ function cinematicaContra(equipo, nombreEquipo, minuto, cb) {
     if(t===golEnFrame && !golDisparado){ golDisparado=true; dispararGol(equipo,nombreEquipo,minuto); }
 
     actualizarJugadores(); actualizarPelota(0.10); dibujarFrame();
-    if(t>golEnFrame){ overlayT++; overlayGol(equipo,nombreEquipo,minuto,Math.min(overlayT/40,1)); }
+    if(t>golEnFrame){
+      overlayT++;
+      overlayGol(equipo, nombreEquipo, minuto, Math.min(overlayT/40, 1));
+    }
     if(t>=dur){ clearInterval(inter); finalizarCinematica(cb); }
   },16);
 }
@@ -321,7 +340,10 @@ function cinematicaBanda(equipo, nombreEquipo, minuto, cb) {
     if(t===golEnFrame && !golDisparado){ golDisparado=true; dispararGol(equipo,nombreEquipo,minuto); }
 
     actualizarJugadores(); actualizarPelota(0.11); dibujarFrame();
-    if(t>golEnFrame){ overlayT++; overlayGol(equipo,nombreEquipo,minuto,Math.min(overlayT/40,1)); }
+    if(t>golEnFrame){
+      overlayT++;
+      overlayGol(equipo, nombreEquipo, minuto, Math.min(overlayT/40, 1));
+    }
     if(t>=dur){ clearInterval(inter); finalizarCinematica(cb); }
   },16);
 }
@@ -355,7 +377,10 @@ function cinematicaTiroLibre(equipo, nombreEquipo, minuto, cb) {
       ctx.stroke(); ctx.setLineDash([]);
     }
 
-    if(t>golEnFrame){ overlayT++; overlayGol(equipo,nombreEquipo,minuto,Math.min(overlayT/40,1)); }
+    if(t>golEnFrame){
+      overlayT++;
+      overlayGol(equipo, nombreEquipo, minuto, Math.min(overlayT/40, 1));
+    }
     if(t>=dur){ clearInterval(inter); finalizarCinematica(cb); }
   },16);
 }
@@ -386,7 +411,10 @@ function cinematicaGolazo(equipo, nombreEquipo, minuto, cb) {
 
     if(p>0.15&&p<0.70){ ctx.strokeStyle='rgba(255,45,120,0.12)'; ctx.lineWidth=2; ctx.setLineDash([3,5]); ctx.beginPath(); ctx.moveTo(inicioX,inicioY); ctx.lineTo(delant.x,delant.y); ctx.stroke(); ctx.setLineDash([]); }
 
-    if(t>golEnFrame){ overlayT++; overlayGol(equipo,nombreEquipo,minuto,Math.min(overlayT/40,1)); }
+    if(t>golEnFrame){
+      overlayT++;
+      overlayGol(equipo, nombreEquipo, minuto, Math.min(overlayT/40, 1));
+    }
     if(t>=dur){ clearInterval(inter); finalizarCinematica(cb); }
   },16);
 }
@@ -462,9 +490,30 @@ function reproducirPartido(resultado, nombreLocal) {
   if(animFrameId) cancelAnimationFrame(animFrameId);
   animLoop();
 
+  window._skipActivo = false;
+  document.getElementById('btn-skip').onclick = () => {
+    skipPartido();
+
+    // Simulamos los goles restantes instantáneamente
+    while (idx < eventos.length) {
+      const ev = eventos[idx];
+      if (ev.equipo === 'local') golesL++;
+      else                       golesV++;
+      idx++;
+    }
+
+    mostrarResultadoFinal({
+      ...resultado,
+      golesLocal:  golesL,
+      golesVisita: golesV,
+    }, nombreLocal);
+  };
+
   actualizarHeaderPartido(nombreLocal,nombreRival,0,0,0,true);
 
   const tick=setInterval(()=>{
+    if (window._skipActivo) { clearInterval(tick); return; }
+
     if(pausado) return;
     minuto++;
 
